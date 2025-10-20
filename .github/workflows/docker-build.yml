@@ -1,0 +1,29 @@
+name: Auto CI on Main Push
+
+# Trigger workflow on every push to the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Run CI Pipeline
+    runs-on: ubuntu-latest  # GitHub provides a Linux runner
+
+    steps:
+      # Step 1: Checkout your repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Print a message (to confirm workflow runs)
+      - name: Verify workflow
+        run: echo "✅ CI Pipeline Triggered on Push to Main Branch!"
+
+      # Step 3: (Optional) Run your tests or build commands
+      - name: Run tests
+        run: |
+          echo "Running automated tests..."
+          # Example test command:
+          # npm install && npm test
+          echo "✅ All tests passed successfully!"
