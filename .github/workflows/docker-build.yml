@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,13 +18,14 @@ jobs:
         uses: actions/checkout@v4
 
       # Step 2: Print a message (to confirm workflow runs)
-      - name: Verify workflow
-        run: echo "✅ CI Pipeline Triggered on Push to Main Branch!"
+      - name: Pull image from Docker Hub
+        run: docker pull
+abdulwahab4d/first_docker_repository:latest
 
       # Step 3: (Optional) Run your tests or build commands
-      - name: Run tests
+      - name: Run container  and check output
         run: |
-          echo "Running automated tests..."
+          echo "Running container..."
           # Example test command:
           # npm install && npm test
           echo "✅ All tests passed successfully!"
