@@ -17,13 +17,13 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
-        run: terraform init # Add the directory path if needed
+        run: terraform -chdir=terraform init # Add the directory path if needed
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform -chdir=terraform plan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform -chdir=terraform apply -auto-approve
 
 
     env:
