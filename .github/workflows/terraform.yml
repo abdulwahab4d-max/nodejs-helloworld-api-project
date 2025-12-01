@@ -3,7 +3,7 @@ name: Terraform CI
 on:
   push:
     branches:
-      - terraform  # or whichever branch you're using
+      - master  # or whichever branch you're using
 
 jobs:
   terraform:
@@ -17,7 +17,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Terraform Init
-        run: terraform init # Add the directory path if needed
+        run: terraform init /terraform # Add the directory path if needed
 
       - name: Terraform Plan
         run: terraform plan
