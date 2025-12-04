@@ -8,6 +8,7 @@ resource "aws_key_pair" "mykey" {
 resource "aws_security_group" "allow_http" {
   name_prefix = "allow_http_"
 
+#port enabled for public ip
   ingress {
     from_port   = 8080
     to_port     = 8080
