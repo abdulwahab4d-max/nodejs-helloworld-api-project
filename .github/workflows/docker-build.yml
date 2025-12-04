@@ -39,8 +39,8 @@ jobs:
     - name: SSH Deploy to EC2
       uses: appleboy/ssh-action@v1.0.3
       with:
-	host: ${{ secrets.SSH_HOST }}      # This is terraform output
-	 username: ubuntu
-         key: ${{ secrets.SSH_KEY }}        # Private key
-         script: |
-            bash /home/ubuntu/deploy.sh
+        host: ${{ secrets.SSH_HOST }}      # This is terraform output
+        username: ubuntu
+        key: ${{ secrets.SSH_KEY }}        # Private key
+        script: |
+          bash /home/ubuntu/deploy.sh
