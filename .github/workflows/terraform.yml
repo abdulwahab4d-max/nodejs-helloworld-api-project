@@ -48,14 +48,14 @@ jobs:
         debug: true
         script: |
           # Optional: stop the container if running
-          docker stop my-app || true
-          docker rm my-app || true
+          sudo docker stop my-app || true
+          sudo docker rm my-app || true
 
           # Pull the latest image from Docker registry
-          docker pull abdulwahab4d/first_docker_repository:latest
+          sudo docker pull abdulwahab4d/first_docker_repository:latest
 
           # Run the container (replace ports/env as needed)
-          docker run -d --name my-app -p 3000:3000 abdulwahab4d/first_docker_repository:latest
+          sudo docker run -d --name my-app -p 3000:3000 abdulwahab4d/first_docker_repository:latest
         
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
