@@ -45,11 +45,32 @@ resource "aws_instance" "ubuntu" {
   }
 
   user_data = <<-EOF
-              #!/bin/bash
-              apt-get update -y
-              apt-get install -y docker.io
-              systemctl start docker
-              systemctl enable docker
-              docker run -d -p 80:80 nginx
-              EOF
+    #!/bin/bash
+    apt update -y
+    apt install -y docker.io
+
+    # Enable docker
+    systemctl start docker
+    systemctl enable docker
+
+    # Create deploy script
+    cat << 'SCRIPT' > /home/ubuntu/deploy.sh
+    #!/bin/bash
+    DOCKER_APP_NAME=my-node-app
+    DOCKER_IMAGE=abdulwahab4d/first_docker_repository::latest
+
+    echo "Pulling latest image..."
+    docker pull \$DOCKER_IMAGE
+
+    echo "Stopping existing container..."
+    docker stop \$DOCKER_APP_NAME || true
+    docker rm \$DOCKER_APP_NAME || true
+
+    echo "Running new container..."
+    docker run -d -p 80:3000 --name \$DOCKER_APP_NAME \$DOCKER_IMAGE
+    SCRIPT
+
+    chmod +x /home/ubuntu/deploy.sh
+    chown ubuntu:ubuntu /home/ubuntu/deploy.sh
+  EOF
 }

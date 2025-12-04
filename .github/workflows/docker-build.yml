@@ -35,3 +35,12 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/first_docker_repository:$GITHUB_SHA
         # Replace 'my-node-app' with your app's name
+# Deploy on EC2 via SSH
+    - name: SSH Deploy to EC2
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+	host: ${{ secrets.SSH_HOST }}      # This is terraform output
+	 username: ubuntu
+         key: ${{ secrets.SSH_KEY }}        # Private key
+         script: |
+            bash /home/ubuntu/deploy.sh
