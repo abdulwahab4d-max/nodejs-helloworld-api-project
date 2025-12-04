@@ -52,6 +52,20 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         debug: true
         script: |
+          echo "Checking if Docker is installed..."
+          until command -v docker >/dev/null 2>&1; do
+            echo "Docker not installed yet. Waiting..."
+            sleep 5
+          done
+
+          echo "Docker command exists. Waiting for Docker daemon..."
+          until sudo docker ps >/dev/null 2>&1; do
+            echo "Docker daemon not ready. Waiting..."
+            sleep 5
+          done
+
+          echo "Docker is fully installed and running!"
+          
           # Optional: stop the container if running
           sudo docker stop my-app || true
           sudo docker rm my-app || true
