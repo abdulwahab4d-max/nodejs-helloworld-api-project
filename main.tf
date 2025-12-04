@@ -57,6 +57,6 @@ resource "aws_instance" "ubuntu" {
     sudo npm install body-parser
     sudo npm install cors
     sudo npm install express
-    
+    node server.js
   EOF
 }
