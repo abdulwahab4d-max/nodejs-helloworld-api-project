@@ -53,6 +53,7 @@ resource "aws_instance" "ubuntu" {
     systemctl start docker
     systemctl enable docker
     
+    sudo apt install nodejs
     sudo apt install npm
     sudo npm install body-parser
     sudo npm install cors
