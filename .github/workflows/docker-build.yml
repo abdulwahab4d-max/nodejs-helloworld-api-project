@@ -30,6 +30,7 @@ jobs:
       run: |
         docker build -t ${{ secrets.DOCKER_USERNAME }}/first_docker_repository:$GITHUB_SHA .
         # Replace 'my-node-app' with the name of your app
+        
     # Push the Docker image to Docker Hub
     - name: Push Docker image
       run: |
@@ -37,25 +38,25 @@ jobs:
         # Replace 'my-node-app' with your app's name
         
         
-      # Get EC2 public IP dynamically (PLACE YOUR STEP HERE)
-      - name: Get EC2 Public IP dynamically
-        id: get_ip
-        run: |
+     # Get EC2 public IP dynamically (PLACE YOUR STEP HERE)
+    - name: Get EC2 Public IP dynamically
+      id: get_ip
+      run: |
           PUBLIC_IP=$(aws ec2 describe-instances \
             --filters "Name=tag:Name,Values=my-ec2" \
             --query "Reservations[0].Instances[0].PublicIpAddress" \
             --output text)
           echo "EC2_PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
 
-      # SSH into EC2 and deploy
-      - name: SSH to EC2 and deploy
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ env.EC2_PUBLIC_IP }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd /home/ubuntu/app
-            git pull
-            npm install
-            pm2 restart all
+     # SSH into EC2 and deploy
+    - name: SSH to EC2 and deploy
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ env.EC2_PUBLIC_IP }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd /home/ubuntu/app
+          git pull
+          npm install
+          pm2 restart all
