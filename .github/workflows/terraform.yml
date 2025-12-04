@@ -10,22 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
 
-      - name: Terraform Init
-        run: terraform init # Add the directory path if needed
+    - name: Terraform Init
+      run: terraform init # Add the directory path if needed
 
-      - name: Terraform Plan
-        run: terraform plan
+    - name: Terraform Plan
+      run: terraform plan
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
 
-     # Get EC2 public IP dynamically (PLACE YOUR STEP HERE)
+      # Get EC2 public IP dynamically (PLACE YOUR STEP HERE)
     - name: Get EC2 Public IP dynamically
       id: get_ip
       run: |
@@ -36,10 +36,10 @@ jobs:
             --output text)
           echo "EC2_PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
 
-     # SSH into EC2 and deploy
+       # SSH into EC2 and deploy
     - name: SSH to EC2 and deploy
       uses: appleboy/ssh-action@v1.0.3
-      with:
+        with:
         host: ${{ env.EC2_PUBLIC_IP }}
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
