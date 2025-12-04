@@ -12,6 +12,7 @@ terraform {
   }
 }
 
+# Ip of the Instance
 output "ec2_public_ip" {
   value = aws_instance.ubuntu.public_ip
 }
