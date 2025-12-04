@@ -31,8 +31,8 @@ jobs:
       run: |
           PUBLIC_IP=$(aws ec2 describe-instances \
             --region eu-north-1 \
-            --filters "Name=tag:Name,Values=my-ec2" \
-            --query "Reservations[0].Instances[0].PublicIpAddress" \
+            --filters "Name=tag:Name,Values=my-ec2" "Name=instance-state-name,Values=running" \
+            --query "Reservations[].Instances[] | sort_by(@, &LaunchTime) | [-1].PublicIpAddress" \
             --output text)
           echo "EC2_PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
 
