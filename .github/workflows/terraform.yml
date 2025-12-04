@@ -36,7 +36,11 @@ jobs:
             --output text)
           echo "EC2_PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
           echo "Using EC2 IP: $PUBLIC_IP"
-
+          
+     - name: Waiting for Installation of Docker
+       run: |
+         echo "Waiting 30 seconds for EC2 to warm up..."
+         sleep 30
 
        # SSH into EC2 and deploy
     - name: SSH to EC2 and deploy
