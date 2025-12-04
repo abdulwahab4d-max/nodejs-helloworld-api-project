@@ -43,6 +43,7 @@ jobs:
           echo "Waiting for SSH..."
           sleep 5
         done
+        
        # SSH into EC2 and deploy
     - name: SSH to EC2 and deploy
       uses: appleboy/ssh-action@v1.0.3
@@ -57,7 +58,7 @@ jobs:
             echo "Docker not installed yet. Waiting..."
             sleep 5
           done
-
+          
           echo "Docker command exists. Waiting for Docker daemon..."
           until sudo docker ps >/dev/null 2>&1; do
             echo "Docker daemon not ready. Waiting..."
