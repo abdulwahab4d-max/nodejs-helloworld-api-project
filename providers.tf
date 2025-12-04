@@ -12,7 +12,7 @@ terraform {
   }
 }
 
-# Ip of the Instance
+# Ip of the Instance created by teraform
 output "ec2_public_ip" {
   value = aws_instance.ubuntu.public_ip
 }
