@@ -36,12 +36,6 @@ jobs:
             --output text)
           echo "EC2_PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
 
-    - name: Wait for SSH to be available
-      run: |
-       until nc -zv ${{ env.EC2_PUBLIC_IP }} 8080; do
-         echo "Waiting for SSH..."
-         sleep 5
-       done
 
        # SSH into EC2 and deploy
     - name: SSH to EC2 and deploy
