@@ -35,15 +35,27 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/first_docker_repository:$GITHUB_SHA
         # Replace 'my-node-app' with your app's name
-# Deploy on EC2 via SSH
-    - name: SSH Deploy to EC2
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ env.EC2_PUBLIC_IP }}      # This is terraform output
-        username: ubuntu
-        key: ${{ secrets.SSH_KEY }}        # Private key
-        script: |
-          bash /home/ubuntu/deploy.sh
-          git pull
-          npm install
-          pm2 restart all
+        
+        
+      # Get EC2 public IP dynamically (PLACE YOUR STEP HERE)
+      - name: Get EC2 Public IP dynamically
+        id: get_ip
+        run: |
+          PUBLIC_IP=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=my-ec2" \
+            --query "Reservations[0].Instances[0].PublicIpAddress" \
+            --output text)
+          echo "EC2_PUBLIC_IP=$PUBLIC_IP" >> $GITHUB_ENV
+
+      # SSH into EC2 and deploy
+      - name: SSH to EC2 and deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ env.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/app
+            git pull
+            npm install
+            pm2 restart all
