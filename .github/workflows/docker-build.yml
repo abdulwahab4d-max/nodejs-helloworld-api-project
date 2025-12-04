@@ -43,6 +43,7 @@ jobs:
       id: get_ip
       run: |
           PUBLIC_IP=$(aws ec2 describe-instances \
+            --region eu-north-1 \
             --filters "Name=tag:Name,Values=my-ec2" \
             --query "Reservations[0].Instances[0].PublicIpAddress" \
             --output text)
