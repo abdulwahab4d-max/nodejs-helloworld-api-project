@@ -42,7 +42,7 @@ jobs:
     - name: Get EC2 Public IP dynamically
       id: get_ip
       run: |
-          PUBLIC_IP=$(aws ec2 describe-instances \
+          PUBLIC_IP=$(aws ec2 Terraform-Ubuntu-nodejs \
             --region eu-north-1 \
             --filters "Name=tag:Name,Values=my-ec2" \
             --query "Reservations[0].Instances[0].PublicIpAddress" \
